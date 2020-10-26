@@ -2,14 +2,18 @@ package cl.bgmp.butils.gui;
 
 import org.bukkit.entity.Player;
 
-/** Represents an object able to be clicked by a {@link Player} */
+/**
+ * To be implemented by objects which are meant to be clicked by a {@link Player}
+ *
+ * <p>{@see {@link GUIButton}}
+ */
 @FunctionalInterface
 public interface Clickable {
 
   /**
-   * Method to be called when the object is clicked
+   * Method to be called when the object is clicked.
    *
-   * @param clicker The player who clicked
+   * @param clicker The player who clicked it.
    */
   void clickBy(Player clicker);
 }

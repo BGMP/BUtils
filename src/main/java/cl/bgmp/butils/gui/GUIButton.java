@@ -25,18 +25,18 @@ public abstract class GUIButton implements Clickable {
   }
 
   /**
-   * Retrieve the slot
+   * Retrieve the slot of this button.
    *
-   * @return The slot to which this button should be associated to, or -1 if not assigned
+   * @return The slot to which this button should be associated, or -1 if not assigned.
    */
   public int getSlot() {
     return slot;
   }
 
   /**
-   * Method to be overridden by classes which extend {@link GUIButton}
+   * Method to be overridden by classes which extend {@link GUIButton}.
    *
-   * @param clicker The player who clicked
+   * @param clicker The player who clicked.
    */
   @Override
   public abstract void clickBy(Player clicker);
