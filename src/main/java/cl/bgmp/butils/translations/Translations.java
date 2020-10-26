@@ -23,13 +23,12 @@ public abstract class Translations {
 
   /**
    * Gets the translation for a string key, or the base string related to the key if any problem
-   * arises whilst retrieving the translation. If the translation is not found at all, then returns
-   * {@code null}
+   * arises whilst retrieving the translation.
    *
    * @param key The key of the string
    * @param locale The locale code of the language to translate to
    * @param args All of the arguments to be replaced within the string
-   * @return The translation
+   * @return The translation, or {@code null} if not found.
    */
   public String get(String key, String locale, Object... args) {
     String translated = null;
@@ -52,7 +51,6 @@ public abstract class Translations {
     return translated;
   }
 
-  /** Same as above, but receiving different params */
   public String get(Translatable translatable, String locale) {
     return this.get(translatable.getKey(), locale, translatable.getArgs());
   }

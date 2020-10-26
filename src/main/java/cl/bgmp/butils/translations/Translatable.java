@@ -1,5 +1,6 @@
 package cl.bgmp.butils.translations;
 
+/** Represents a translatable key, along with any arguments it may require */
 public class Translatable {
   private String key;
   private Object[] args;
