@@ -1,28 +1,39 @@
 package cl.bgmp.butils.items;
 
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.SkullType;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 public class PlayerHeadBuilder extends ItemBuilder {
+  private SkullMeta skullMeta;
 
+  public PlayerHeadBuilder(String nick) {
+    super(Material.LEGACY_SKULL_ITEM);
+    this.skullMeta = (SkullMeta) this.itemMeta;
+
+    this.setDamage((short) SkullType.PLAYER.ordinal());
+    this.setOwner(nick);
+  }
+
+  /**
+   * This legacy constructor will disappear passed the pre-snapshots. Use {@link
+   * this#PlayerHeadBuilder(String)} instead.
+   */
+  @Deprecated
   public PlayerHeadBuilder() {
     super(Material.LEGACY_SKULL_ITEM);
     this.setDamage((short) SkullType.PLAYER.ordinal());
   }
 
   public PlayerHeadBuilder setOwner(String nick) {
-    SkullMeta skullMeta = (SkullMeta) this.itemStack.getItemMeta();
-    skullMeta.setOwner(nick);
-    this.itemStack.setItemMeta(skullMeta);
+    this.skullMeta.setOwner(nick);
     return this;
   }
 
-  public PlayerHeadBuilder setOwner(OfflinePlayer player) {
-    SkullMeta skullMeta = (SkullMeta) this.itemStack.getItemMeta();
-    skullMeta.setOwningPlayer(player);
-    this.itemStack.setItemMeta(skullMeta);
-    return this;
+  @Override
+  public ItemStack build() {
+    this.itemStack.setItemMeta(this.skullMeta);
+    return this.itemStack;
   }
 }
