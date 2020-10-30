@@ -23,6 +23,8 @@ public class PlayerHeadBuilder extends ItemBuilder {
   @Deprecated
   public PlayerHeadBuilder() {
     super(Material.LEGACY_SKULL_ITEM);
+
+    this.skullMeta = (SkullMeta) this.itemMeta;
     this.setDamage((short) SkullType.PLAYER.ordinal());
   }
 
