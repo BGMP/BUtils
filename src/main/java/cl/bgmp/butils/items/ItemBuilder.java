@@ -29,8 +29,8 @@ public class ItemBuilder {
     return this;
   }
 
-  public ItemBuilder setDamage(short damage) {
-    this.itemStack.setDurability(damage);
+  public ItemBuilder setDamage(int damage) {
+    this.itemStack.setDurability((short) damage);
     return this;
   }
 
@@ -51,6 +51,10 @@ public class ItemBuilder {
   public ItemBuilder enchant(Enchantment enchantment, int level, boolean ignoreLevelRestrictions) {
     this.itemMeta.addEnchant(enchantment, level, ignoreLevelRestrictions);
     return this;
+  }
+
+  public ItemBuilder enchant(Enchantment enchantment) {
+    return this.enchant(enchantment, 1, false);
   }
 
   public ItemBuilder addFlags(ItemFlag... itemFlags) {
