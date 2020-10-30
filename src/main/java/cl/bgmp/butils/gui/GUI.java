@@ -1,6 +1,5 @@
 package cl.bgmp.butils.gui;
 
-import cl.bgmp.butils.gui.amount.AmountGUIButton;
 import java.util.List;
 import javax.annotation.Nonnull;
 import org.bukkit.Bukkit;
@@ -94,18 +93,6 @@ public abstract class GUI implements Listener {
 
   private void addButtons() {
     for (GUIButton button : this.buttons) {
-
-      if (button instanceof AmountGUIButton<?>) {
-        AmountGUIButton<?> amountButton = (AmountGUIButton<?>) button;
-        if (amountButton.isSelected()) {
-          this.setItem(amountButton.getSlot(), amountButton.getItemWhenSelected());
-        } else {
-          this.setItem(amountButton.getSlot(), amountButton.getItemStack());
-        }
-
-        continue;
-      }
-
       this.setItem(button.getSlot(), button.getItemStack());
     }
   }

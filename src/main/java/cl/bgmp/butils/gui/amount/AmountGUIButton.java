@@ -19,8 +19,8 @@ public abstract class AmountGUIButton<T> extends GUIButton {
   protected ItemStack itemWhenSelected;
   protected boolean selected;
 
-  public AmountGUIButton(int slot, T amount, boolean selected) {
-    super(null, slot);
+  public AmountGUIButton(ItemStack item, int slot, T amount, boolean selected) {
+    super(item, slot);
     this.amount = amount;
     this.selected = selected;
     this.itemWhenSelected =
@@ -28,15 +28,10 @@ public abstract class AmountGUIButton<T> extends GUIButton {
             .setName("&a" + this.getVerboseValue())
             .setLore("&a&lSELECCIONADO")
             .build();
-    this.setItemStack();
   }
 
-  public AmountGUIButton(int slot, T amount) {
-    this(slot, amount, false);
-  }
-
-  public void setItemStack(ItemStack itemStack) {
-    this.itemStack = itemStack;
+  public AmountGUIButton(ItemStack item, int slot, T amount) {
+    this(item, slot, amount, false);
   }
 
   public void setSelected(boolean selected) {
@@ -47,13 +42,18 @@ public abstract class AmountGUIButton<T> extends GUIButton {
     return selected;
   }
 
-  public ItemStack getItemWhenSelected() {
-    return itemWhenSelected;
-  }
-
-  public abstract void setItemStack();
-
+  /**
+   * Depending on the kind of button created, a different string representing the value of it may be
+   * required, such as "1 minute", "3 something", etc.
+   *
+   * @return The verbose value, typically in the form a sentence.
+   */
   public abstract String getVerboseValue();
+
+  @Override
+  public ItemStack getItemStack() {
+    return this.isSelected() ? this.itemWhenSelected : this.itemStack;
+  }
 
   @Override
   public abstract void clickBy(Player player);

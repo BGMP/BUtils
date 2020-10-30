@@ -28,13 +28,10 @@ public abstract class AmountSelectionGUI<T extends AmountGUIButton<?>> extends G
     if (!this.wasClicked(event)) return;
     event.setCancelled(true);
 
-    Player player = (Player) event.getWhoClicked();
     int clickedSlot = event.getSlot();
+    if (buttons.stream().noneMatch(b -> b.getSlot() == clickedSlot)) return;
 
-    if (buttons.stream().noneMatch(b -> b.getSlot() == clickedSlot)) {
-      return;
-    }
-
+    final Player player = (Player) event.getWhoClicked();
     for (AmountGUIButton<T> button : buttons) {
       if (clickedSlot == button.getSlot()) {
         button.clickBy(player);
