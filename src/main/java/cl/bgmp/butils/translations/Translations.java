@@ -1,5 +1,7 @@
 package cl.bgmp.butils.translations;
 
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -7,18 +9,44 @@ import java.util.Properties;
  * Represents a strings translator, which can be fed with a template .properties file containing all
  * the base strings, and multiple other .properties files for each locale.
  *
- * <p>This class relies on careful handling at the moment of naming localisation files, as the local
- * codes must remain consistent throughout the project.
+ * <p>This class relies on careful handling at the moment of naming localisation files, as the
+ * locale codes must remain consistent throughout the project.
  *
  * <p>{@see resources/i18n}
  */
 public abstract class Translations {
-  private Properties template;
-  private Map<String, Properties> translationFiles;
+  private static final String TEMPLATE_LOCALE = "en_us";
 
-  public Translations(Properties template, Map<String, Properties> translationFiles) {
-    this.template = template;
-    this.translationFiles = translationFiles;
+  private Properties templateFile;
+  private Map<String, Properties> translationFilesMap;
+  private Map<String, Map<String, String>> translationsMap = new HashMap<>();
+
+  public Translations(Properties templateFile, Map<String, Properties> translationFilesMap) {
+    this.templateFile = templateFile;
+    this.translationFilesMap = translationFilesMap;
+
+    this.loadTranslations();
+  }
+
+  public void loadTranslations() {
+    for (String locale : this.translationFilesMap.keySet()) {
+      final Properties localeFile = this.translationFilesMap.get(locale);
+      this.loadLocale(locale, localeFile);
+    }
+
+    this.loadLocale(TEMPLATE_LOCALE, templateFile);
+  }
+
+  private void loadLocale(String locale, Properties translationsFile) {
+    final Enumeration<?> keys = translationsFile.propertyNames();
+    final Map<String, String> translations = new HashMap<>();
+
+    while (keys.hasMoreElements()) {
+      String key = keys.nextElement().toString();
+      translations.put(key, translationsFile.getProperty(key));
+    }
+
+    this.translationsMap.put(locale, translations);
   }
 
   /**
@@ -32,16 +60,18 @@ public abstract class Translations {
    */
   public String get(String key, String locale, Object... args) {
     String translated = null;
-    final Properties translationsFile = translationFiles.get(locale);
-    if (translationsFile != null) {
-      final String translation = translationsFile.getProperty(key);
+    final Map<String, String> translations = this.translationsMap.get(locale);
+
+    if (translations != null) {
+      final String translation = translations.get(key);
       if (translation != null) {
         translated = translation;
       }
     }
 
     if (translated == null) {
-      translated = template.getProperty(key);
+      final Map<String, String> templates = this.translationsMap.get(TEMPLATE_LOCALE);
+      translated = templates.get(key);
     }
 
     if (args != null && translated != null) {
