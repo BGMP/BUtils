@@ -28,7 +28,7 @@ public abstract class Translations {
     this.loadTranslations();
   }
 
-  public void loadTranslations() {
+  private void loadTranslations() {
     for (String locale : this.translationFilesMap.keySet()) {
       final Properties localeFile = this.translationFilesMap.get(locale);
       this.loadLocale(locale, localeFile);
