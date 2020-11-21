@@ -11,7 +11,7 @@ import java.util.Properties;
 import org.junit.Test;
 
 /** All tests related to translations. */
-public class TranslatorTests {
+public class TranslationsTests {
   private final Properties template =
       PropertiesUtils.fromResources(this, "i18n/template/strings.properties");
   private final Map<String, Properties> translationFiles =
@@ -31,19 +31,19 @@ public class TranslatorTests {
       };
 
   @Test
-  public void testTranslations() {
+  public void testRegularTranslations() {
     String translation = translations.get("test.hello", "es_cl");
     assertEquals("Hola", translation);
   }
 
   @Test
-  public void testArguments() {
+  public void testTranslationArguments() {
     String translation = translations.get("test.arguments", "es_cl", 2);
     assertEquals("Hay 2 manzanas", translation);
   }
 
   @Test
-  public void testNestedTranslation() {
+  public void testNestedTranslations() {
     String translation =
         translations.get(
             "test.nested.translations",
