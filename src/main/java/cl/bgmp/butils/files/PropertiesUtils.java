@@ -54,7 +54,7 @@ public interface PropertiesUtils {
    */
   @Deprecated
   static Properties newPropertiesResource(Class<?> clazz, String path, Charset charset) {
-    return newProperties(getResource(clazz, path), charset);
+    return newProperties(Files.resourceAsStream(clazz, path), charset);
   }
 
   @Deprecated
@@ -85,19 +85,5 @@ public interface PropertiesUtils {
   @Deprecated
   static Properties newProperties(InputStream input) {
     return newProperties(input, StandardCharsets.UTF_8);
-  }
-
-  /**
-   * Use {@link this#fromResources(Object, String)}
-   *
-   * <p>Retrieves a file as an {@link InputStream} from the resources folder
-   *
-   * @param clazz The class where this method is called at
-   * @param path Path to the resource
-   * @return The requested file as an InputStream from the resources directory
-   */
-  @Deprecated
-  static InputStream getResource(Class<?> clazz, String path) {
-    return clazz.getClassLoader().getResourceAsStream(path);
   }
 }
