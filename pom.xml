@@ -18,7 +18,7 @@
     <distributionManagement>
         <snapshotRepository>
             <id>bgm</id>
-            <url>ftp://maven.bgmp.cl/repo</url>
+            <url>ftp://maven.bgmp.cl/</url>
         </snapshotRepository>
     </distributionManagement>
 
